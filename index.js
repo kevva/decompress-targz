@@ -21,12 +21,14 @@ module.exports = function (opts) {
         var files = [];
 
         if (archiveType(file.contents) !== 'gz') {
-            return cb();
+            cb();
+            return;
         }
 
         sbuff(file.contents).pipe(zlib.Unzip()).pipe(tar.Parse())
             .on('error', function (err) {
-                return cb(err);
+                cb(err);
+                return;
             })
             .on('entry', function (file) {
                 if (file.type !== 'Directory') {
