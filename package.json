@@ -26,12 +26,12 @@
     "targz"
   ],
   "dependencies": {
-    "archive-type": "^0.1.2",
+    "archive-type": "^0.1.4",
     "simple-bufferstream": "0.0.4",
-    "tar": "^0.1.19"
+    "tar": "^1.0.0"
   },
   "devDependencies": {
-    "decompress": "^0.3.0",
+    "decompress": "^1.0.0",
     "mocha": "^1.18.2"
   }
 }
