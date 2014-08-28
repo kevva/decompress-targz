@@ -40,7 +40,7 @@ module.exports = function (opts) {
                     });
 
                     file.on('end', function () {
-                        chunk = new Buffer(chunk, 'utf8');
+                        chunk = new Buffer(chunk);
                         files.push({ contents: chunk, path: stripDirs(file.path, opts.strip) });
                     });
                 }

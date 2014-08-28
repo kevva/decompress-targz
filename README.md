@@ -29,7 +29,7 @@ decompress.decompress();
 Type: `Number`  
 Default: `0`
 
-Equivalent to `--w-components` for tar.
+Equivalent to `--strip-components` for tar.
 
 ## License
 
