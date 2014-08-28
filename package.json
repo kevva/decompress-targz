@@ -13,7 +13,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha --reporter list"
+    "test": "node test/test.js"
   },
   "files": [
     "index.js"
@@ -32,8 +32,8 @@
     "tar": "^1.0.0"
   },
   "devDependencies": {
+    "ava": "0.0.4",
     "decompress": "^1.0.0",
-    "mocha": "^1.18.2",
     "rimraf": "^2.2.8"
   }
 }
