@@ -33,14 +33,16 @@ module.exports = function (opts) {
 
             .on('entry', function (file) {
                 if (file.type !== 'Directory') {
-                    var chunk = '';
+                    var chunk = [];
+                    var len = 0;
 
                     file.on('data', function (data) {
-                        chunk += data.toString();
+                        chunk.push(data);
+                        len += data.length;
                     });
 
                     file.on('end', function () {
-                        chunk = new Buffer(chunk);
+                        chunk = Buffer.concat(chunk, len);
                         files.push({ contents: chunk, path: stripDirs(file.path, opts.strip) });
                     });
                 }
