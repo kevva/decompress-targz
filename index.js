@@ -1,9 +1,11 @@
 'use strict';
 
+var File = require('vinyl');
 var isGzip = require('is-gzip');
 var sbuff = require('simple-bufferstream');
 var stripDirs = require('strip-dirs');
 var tar = require('tar');
+var through = require('through2');
 var zlib = require('zlib');
 
 /**
@@ -17,11 +19,21 @@ module.exports = function (opts) {
     opts = opts || {};
     opts.strip = +opts.strip || 0;
 
-    return function (file, decompress, cb) {
-        var files = [];
+    return through.obj(function (file, enc, cb) {
+        var self = this;
+
+        if (file.isNull()) {
+            cb(null, file);
+            return;
+        }
+
+        if (file.isStream()) {
+            cb(new Error('Streaming is not supported'));
+            return;
+        }
 
         if (!isGzip(file.contents)) {
-            cb();
+            cb(null, file);
             return;
         }
 
@@ -42,14 +54,16 @@ module.exports = function (opts) {
                     });
 
                     file.on('end', function () {
-                        chunk = Buffer.concat(chunk, len);
-                        files.push({ contents: chunk, path: stripDirs(file.path, opts.strip) });
+                        self.push(new File({
+                            contents: Buffer.concat(chunk, len),
+                            path: stripDirs(file.path, opts.strip)
+                        }));
                     });
                 }
             })
+
             .on('end', function () {
-                decompress.files = files;
                 cb();
             });
-    };
+    });
 };

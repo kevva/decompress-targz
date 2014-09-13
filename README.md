@@ -16,10 +16,29 @@ var targz = require('decompress-targz');
 
 var decompress = new Decompress()
     .src('foo.tar.gz')
-    .dest('destFolder')
+    .dest('dest')
     .use(targz({ strip: 1 }));
 
-decompress.decompress();
+decompress.run(function (err, files) {
+    if (err) {
+        throw err;
+    }
+
+    console.log('Files extracted successfully!'); 
+});
+```
+
+You can also use this plugin with [gulp](http://gulpjs.com):
+
+```js
+var gulp = require('gulp');
+var targz = require('decompress-targz');
+
+gulp.task('default', function () {
+    return gulp.src('foo.tar.gz')
+        .pipe(targz({ strip: 1 }))
+        .pipe(gulp.dest('dest'));
+});
 ```
 
 ## Options
