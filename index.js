@@ -15,60 +15,60 @@ var zlib = require('zlib');
  */
 
 module.exports = function (opts) {
-    opts = opts || {};
-    opts.strip = +opts.strip || 0;
+	opts = opts || {};
+	opts.strip = +opts.strip || 0;
 
-    return through.obj(function (file, enc, cb) {
-        var self = this;
-        var extract = tar.extract();
-        var unzip = zlib.Unzip();
+	return through.obj(function (file, enc, cb) {
+		var self = this;
+		var extract = tar.extract();
+		var unzip = zlib.Unzip();
 
-        if (file.isNull()) {
-            cb(null, file);
-            return;
-        }
+		if (file.isNull()) {
+			cb(null, file);
+			return;
+		}
 
-        if (file.isStream()) {
-            cb(new Error('Streaming is not supported'));
-            return;
-        }
+		if (file.isStream()) {
+			cb(new Error('Streaming is not supported'));
+			return;
+		}
 
-        if (!isGzip(file.contents)) {
-            cb(null, file);
-            return;
-        }
+		if (!isGzip(file.contents)) {
+			cb(null, file);
+			return;
+		}
 
-        extract.on('error', function (err) {
-            cb(err);
-            return;
-        });
+		extract.on('error', function (err) {
+			cb(err);
+			return;
+		});
 
-        extract.on('entry', function (header, stream, done) {
-            var chunk = [];
-            var len = 0;
+		extract.on('entry', function (header, stream, done) {
+			var chunk = [];
+			var len = 0;
 
-            stream.on('data', function (data) {
-                chunk.push(data);
-                len += data.length;
-            });
+			stream.on('data', function (data) {
+				chunk.push(data);
+				len += data.length;
+			});
 
-            stream.on('end', function () {
-                if (header.type !== 'directory') {
-                    self.push(new File({
-                        contents: Buffer.concat(chunk, len),
-                        path: stripDirs(header.name, opts.strip)
-                    }));
-                }
+			stream.on('end', function () {
+				if (header.type !== 'directory') {
+					self.push(new File({
+						contents: Buffer.concat(chunk, len),
+						path: stripDirs(header.name, opts.strip)
+					}));
+				}
 
-                done();
-            });
-        });
+				done();
+			});
+		});
 
-        extract.on('finish', function () {
-            cb();
-        });
+		extract.on('finish', function () {
+			cb();
+		});
 
-        unzip.end(file.contents);
-        unzip.pipe(extract);
-    });
+		unzip.end(file.contents);
+		unzip.pipe(extract);
+	});
 };
