@@ -1,5 +1,6 @@
 'use strict';
 
+var bufferEqual = require('buffer-equal');
 var isJpg = require('is-jpg');
 var path = require('path');
 var read = require('vinyl-file').read;
@@ -33,6 +34,23 @@ test('strip path level using the `strip` option', function (t) {
 		stream.on('data', function (file) {
 			t.assert(file.path === 'test.jpg');
 			t.assert(isJpg(file.contents));
+		});
+
+		stream.end(file);
+	});
+});
+
+test('skip decompressing a non-TAR.GZ file', function (t) {
+	t.plan(2);
+
+	read(__filename, function (err, file) {
+		t.assert(!err, err);
+
+		var stream = targz();
+		var contents = file.contents;
+
+		stream.on('data', function (data) {
+			t.assert(bufferEqual(data.contents, contents));
 		});
 
 		stream.end(file);
