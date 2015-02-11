@@ -7,13 +7,6 @@ var tar = require('tar-stream');
 var through = require('through2');
 var zlib = require('zlib');
 
-/**
- * tar.gz decompress plugin
- *
- * @param {Object} opts
- * @api public
- */
-
 module.exports = function (opts) {
 	opts = opts || {};
 	opts.strip = +opts.strip || 0;

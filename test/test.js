@@ -29,7 +29,7 @@ test('strip path level using the `strip` option', function (t) {
 	read(path.join(__dirname, 'fixtures/test-nested.tar.gz'), function (err, file) {
 		t.assert(!err, err);
 
-		var stream = targz({ strip: 1 });
+		var stream = targz({strip: 1});
 
 		stream.on('data', function (file) {
 			t.assert(file.path === 'test.jpg');
