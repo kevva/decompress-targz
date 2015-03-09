@@ -26,7 +26,7 @@ module.exports = function (opts) {
 			return;
 		}
 
-		if (!isGzip(file.contents)) {
+		if (!file.extract || !isGzip(file.contents)) {
 			cb(null, file);
 			return;
 		}
