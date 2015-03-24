@@ -1,7 +1,9 @@
 'use strict';
 
 var File = require('vinyl');
+var fs = require('fs');
 var isGzip = require('is-gzip');
+var objectAssign = require('object-assign');
 var stripDirs = require('strip-dirs');
 var tar = require('tar-stream');
 var through = require('through2');
@@ -44,7 +46,8 @@ module.exports = function (opts) {
 				if (header.type !== 'directory') {
 					self.push(new File({
 						contents: Buffer.concat(chunk, len),
-						path: stripDirs(header.name, opts.strip)
+						path: stripDirs(header.name, opts.strip),
+						stat: objectAssign(new fs.Stats(), header)
 					}));
 				}
 

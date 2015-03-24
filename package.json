@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "is-gzip": "^1.0.0",
+    "object-assign": "^2.0.0",
     "strip-dirs": "^1.0.0",
     "tar-stream": "^1.1.1",
     "through2": "^0.6.1",
