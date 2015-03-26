@@ -2,11 +2,13 @@
 
 > tar.gz decompress plugin
 
+
 ## Install
 
-```sh
+```
 $ npm install --save decompress-targz
 ```
+
 
 ## Usage
 
@@ -20,10 +22,6 @@ var decompress = new Decompress()
 	.use(targz({strip: 1}));
 
 decompress.run(function (err, files) {
-	if (err) {
-		throw err;
-	}
-
 	console.log('Files extracted successfully!'); 
 });
 ```
@@ -43,14 +41,18 @@ gulp.task('default', function () {
 });
 ```
 
-## Options
 
-### strip
+## API
 
-Type: `Number`  
+### tarGz(options)
+
+#### options.strip
+
+Type: `number`  
 Default: `0`
 
-Equivalent to `--strip-components` for tar.
+Remove leading directory components from extracted files.
+
 
 ## License
 
