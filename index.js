@@ -1,13 +1,13 @@
 'use strict';
 
-var File = require('vinyl');
 var fs = require('fs');
+var zlib = require('zlib');
 var isGzip = require('is-gzip');
 var objectAssign = require('object-assign');
 var stripDirs = require('strip-dirs');
-var tar = require('tar-stream');
+var tarStream = require('tar-stream');
 var through = require('through2');
-var zlib = require('zlib');
+var Vinyl = require('vinyl');
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -15,7 +15,7 @@ module.exports = function (opts) {
 
 	return through.obj(function (file, enc, cb) {
 		var self = this;
-		var extract = tar.extract();
+		var extract = tarStream.extract();
 		var unzip = zlib.Unzip();
 
 		if (file.isNull()) {
@@ -44,7 +44,7 @@ module.exports = function (opts) {
 
 			stream.on('end', function () {
 				if (header.type !== 'directory') {
-					self.push(new File({
+					self.push(new Vinyl({
 						contents: Buffer.concat(chunk, len),
 						path: stripDirs(header.name, opts.strip),
 						stat: objectAssign(new fs.Stats(), header)
