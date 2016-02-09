@@ -19,7 +19,7 @@ module.exports = function (opts) {
 		var unzip = zlib.Unzip();
 
 		if (file.isNull()) {
-			cb(null, file);
+			cb(new Error('The source file is null'));
 			return;
 		}
 
@@ -29,7 +29,7 @@ module.exports = function (opts) {
 		}
 
 		if (!file.extract || !isGzip(file.contents)) {
-			cb(null, file);
+			cb(new Error('The source file is not valid tarball'));
 			return;
 		}
 
