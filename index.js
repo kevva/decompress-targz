@@ -57,6 +57,8 @@ module.exports = function (opts) {
 
 		extract.on('finish', cb);
 		extract.on('error', cb);
+		
+		unzip.on('error', cb);
 		unzip.end(file.contents);
 		unzip.pipe(extract);
 	});
