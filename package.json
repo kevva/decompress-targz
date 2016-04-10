@@ -13,7 +13,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "xo && node test/test.js"
   },
   "files": [
     "index.js"
@@ -38,6 +38,7 @@
     "ava": "0.0.4",
     "buffer-equal": "0.0.1",
     "is-jpg": "^1.0.0",
-    "vinyl-file": "^1.1.0"
+    "vinyl-file": "^1.1.0",
+    "xo": "*"
   }
 }

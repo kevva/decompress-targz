@@ -1,5 +1,4 @@
 'use strict';
-
 var fs = require('fs');
 var zlib = require('zlib');
 var isGzip = require('is-gzip');
@@ -11,12 +10,12 @@ var Vinyl = require('vinyl');
 
 module.exports = function (opts) {
 	opts = opts || {};
-	opts.strip = +opts.strip || 0;
+	opts.strip = Number(opts.strip) || 0;
 
 	return through.obj(function (file, enc, cb) {
 		var self = this;
 		var extract = tarStream.extract();
-		var unzip = zlib.Unzip();
+		var unzip = new zlib.Unzip();
 
 		if (file.isNull()) {
 			cb(null, file);

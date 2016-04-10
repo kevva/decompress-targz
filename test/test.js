@@ -1,8 +1,7 @@
 'use strict';
-
+var path = require('path');
 var bufferEqual = require('buffer-equal');
 var isJpg = require('is-jpg');
-var path = require('path');
 var test = require('ava');
 var vinylFile = require('vinyl-file');
 var decompressTargz = require('../');
