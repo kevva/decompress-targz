@@ -28,11 +28,11 @@
   ],
   "dependencies": {
     "is-gzip": "^1.0.0",
-    "object-assign": "^2.0.0",
+    "object-assign": "^4.0.1",
     "strip-dirs": "^1.0.0",
     "tar-stream": "^1.1.1",
-    "through2": "^0.6.1",
-    "vinyl": "^0.4.3"
+    "through2": "^2.0.1",
+    "vinyl": "^1.1.1"
   },
   "devDependencies": {
     "ava": "*",
