@@ -13,8 +13,8 @@ $ npm install --save decompress-targz
 ## Usage
 
 ```js
-var Decompress = require('decompress');
-var decompressTargz = require('decompress-targz');
+const Decompress = require('decompress');
+const decompressTargz = require('decompress-targz');
 
 new Decompress()
 	.src('foo.tar.gz')
@@ -26,11 +26,11 @@ new Decompress()
 You can also use this plugin with [gulp](http://gulpjs.com):
 
 ```js
-var decompressTargz = require('decompress-targz');
-var gulp = require('gulp');
-var vinylAssign = require('vinyl-assign');
+const decompressTargz = require('decompress-targz');
+const gulp = require('gulp');
+const vinylAssign = require('vinyl-assign');
 
-gulp.task('default', function () {
+gulp.task('default', () => {
 	return gulp.src('foo.tar.gz')
 		.pipe(vinylAssign({extract: true}))
 		.pipe(decompressTargz({strip: 1}))
