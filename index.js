@@ -1,15 +1,15 @@
 'use strict';
 const zlib = require('zlib');
 const decompressTar = require('decompress-tar');
-const isGzip = require('is-gzip');
+const fileType = require('file-type');
 const pify = require('pify');
 
 module.exports = () => buf => {
 	if (!Buffer.isBuffer(buf)) {
-		return Promise.reject(new TypeError('Expected a buffer'));
+		return Promise.reject(new TypeError(`Expected a Buffer, got ${typeof buf}`));
 	}
 
-	if (!isGzip(buf)) {
+	if (!fileType(buf) || fileType(buf).ext !== 'gz') {
 		return Promise.resolve([]);
 	}
 

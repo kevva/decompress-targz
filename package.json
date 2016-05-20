@@ -27,8 +27,8 @@
     "targz"
   ],
   "dependencies": {
-    "decompress-tar": "kevva/decompress-tar#rewrite",
-    "is-gzip": "^1.0.0",
+    "decompress-tar": "^4.0.0",
+    "file-type": "^3.8.0",
     "pify": "^2.3.0"
   },
   "devDependencies": {
