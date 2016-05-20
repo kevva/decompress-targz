@@ -10,7 +10,7 @@
     "url": "https://github.com/kevva"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "xo && ava"
@@ -27,17 +27,16 @@
     "targz"
   ],
   "dependencies": {
+    "decompress-tar": "kevva/decompress-tar#rewrite",
     "is-gzip": "^1.0.0",
-    "object-assign": "^4.0.1",
-    "strip-dirs": "^1.0.0",
-    "tar-stream": "^1.1.1",
-    "through2": "^2.0.1",
-    "vinyl": "^1.1.1"
+    "pify": "^2.3.0"
   },
   "devDependencies": {
     "ava": "*",
     "is-jpg": "^1.0.0",
-    "vinyl-file": "^2.0.0",
     "xo": "*"
+  },
+  "xo": {
+    "esnext": true
   }
 }
