@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "decompress-tar": "^4.0.0",
-    "file-type": "^3.8.0",
+    "file-type": "^4.3.0",
     "is-stream": "^1.1.0"
   },
   "devDependencies": {
@@ -35,8 +35,5 @@
     "is-jpg": "^1.0.0",
     "pify": "^2.3.0",
     "xo": "*"
-  },
-  "xo": {
-    "esnext": true
   }
 }

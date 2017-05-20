@@ -19,7 +19,8 @@ test('extract file using streams', async t => {
 	const stream = fs.createReadStream(path.join(__dirname, 'fixtures', 'file.tar.gz'));
 	const files = await m()(stream);
 
-	t.is(files[0].path, 'test.jpg');	t.true(isJpg(files[0].data));
+	t.is(files[0].path, 'test.jpg');
+	t.true(isJpg(files[0].data));
 });
 
 test('return empty array if non-valid file is supplied', async t => {
