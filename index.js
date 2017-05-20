@@ -2,16 +2,25 @@
 const zlib = require('zlib');
 const decompressTar = require('decompress-tar');
 const fileType = require('file-type');
-const pify = require('pify');
+const isStream = require('is-stream');
 
-module.exports = () => buf => {
-	if (!Buffer.isBuffer(buf)) {
-		return Promise.reject(new TypeError(`Expected a Buffer, got ${typeof buf}`));
+module.exports = () => input => {
+	if (!Buffer.isBuffer(input) && !isStream(input)) {
+		return Promise.reject(new TypeError(`Expected a Buffer or Stream, got ${typeof input}`));
 	}
 
-	if (!fileType(buf) || fileType(buf).ext !== 'gz') {
+	if (Buffer.isBuffer(input) && (!fileType(input) || fileType(input).ext !== 'gz')) {
 		return Promise.resolve([]);
 	}
 
-	return pify(zlib.unzip)(buf).then(decompressTar());
+	const unzip = zlib.createGunzip();
+	const result = decompressTar()(unzip);
+
+	if (Buffer.isBuffer(input)) {
+		unzip.end(input);
+	} else {
+		input.pipe(unzip);
+	}
+
+	return result;
 };
