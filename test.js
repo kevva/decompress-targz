@@ -34,8 +34,12 @@ test('throw on wrong input', async t => {
 	await t.throws(m()('foo'), 'Expected a Buffer or Stream, got string');
 });
 
-test('handle gzip error', async t => {
-	const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'fail.tar.gz'));
-	const err = await t.throws(m()(buf), 'unexpected end of file');
-	t.is(err.code, 'Z_BUF_ERROR');
-});
+// Don't run this test on Node.js v4
+// https://github.com/nodejs/node/commit/80169b1f0a5f944b99e82a409536dea426c992f3
+if (!process.version.startsWith('v4')) {
+	test('handle gzip error', async t => {
+		const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'fail.tar.gz'));
+		const err = await t.throws(m()(buf), 'unexpected end of file');
+		t.is(err.code, 'Z_BUF_ERROR');
+	});
+}
