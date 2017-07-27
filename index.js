@@ -16,6 +16,8 @@ module.exports = () => input => {
 	const unzip = zlib.createGunzip();
 	const result = decompressTar()(unzip);
 
+	unzip.on('error', err => Promise.reject(err)):
+
 	if (Buffer.isBuffer(input)) {
 		unzip.end(input);
 	} else {
