@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save decompress-targz
+$ npm install decompress-targz
 ```
 
 

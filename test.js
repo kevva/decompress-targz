@@ -3,7 +3,7 @@ import path from 'path';
 import isJpg from 'is-jpg';
 import pify from 'pify';
 import test from 'ava';
-import m from './';
+import m from '.';
 
 const fsP = pify(fs);
 
@@ -32,4 +32,10 @@ test('return empty array if non-valid file is supplied', async t => {
 
 test('throw on wrong input', async t => {
 	await t.throws(m()('foo'), 'Expected a Buffer or Stream, got string');
+});
+
+test('handle gzip error', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'fail.tar.gz'));
+	const err = await t.throws(m()(buf), 'unexpected end of file');
+	t.is(err.code, 'Z_BUF_ERROR');
 });
